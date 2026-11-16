@@ -663,14 +663,23 @@
           <p class="author-bio-text">
             សៀវភៅសិក្សានេះ ត្រូវបានចងក្រងឡើងយ៉ាងផ្ចិតផ្ចង់ជាពិសេស សម្រាប់និស្សិតសាលាទេវវិទ្យា CPTIs, គ្រូគង្វាល, ថ្នាក់ដឹកនាំ និងអ្នកបម្រើព្រះគ្រប់ផ្នែកក្នុងពួកជំនុំ។ នៅក្នុងយុគសម័យឌីជីថលនេះ បច្ចេកវិទ្យាកុំព្យូទ័រលែងជាវិជ្ជាជីវៈដាច់ដោយឡែករបស់ពិភពលោកទៀតហើយ ប៉ុន្តែវាគឺជា «ប៊ិច និងក្រដាសសម័យទំនើប» ដែលព្រះទ្រង់ប្រទានឱ្យយើង ដើម្បីបម្រើកិច្ចការព្រះរាជ្យទ្រង់ឱ្យមានរបៀបរៀបរយ សោភ័ណភាព និងប្រសិទ្ធភាពខ្ពស់បំផុត។
           </p>
-          <div style="margin-top: 14px;">
+          <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
             <a href="materials.html" target="_blank" class="btn-github-pill" title="បើកមជ្ឈមណ្ឌលឯកសារដើម្បីទាញយកឯកសារអនុវត្តន៍ និងកិច្ចការផ្ទះ (kora)">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                 <polyline points="12 11 12 17"></polyline>
                 <polyline points="9 14 12 17 15 14"></polyline>
               </svg>
-              <span>📂 មជ្ឈមណ្ឌលឯកសារ & កិច្ចការអនុវត្តន៍ (Kora Materials)</span>
+              <span>📂 មជ្ឈមណ្ឌលឯកសារ & កិច្ចការ (Kora)</span>
+            </a>
+
+            <a href="Computer_for_Ministry_CPTIs.zip" download="Computer_for_Ministry_CPTIs.zip" class="btn-github-pill" style="border-color: rgba(16, 124, 65, 0.4); color: #107c41;" title="ទាញយកកញ្ចប់សៀវភៅទាំងមូលសម្រាប់រៀន Offline លើកុំព្យូទ័រ">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>💾 ទាញយកកញ្ចប់ Offline (ZIP 5MB)</span>
             </a>
           </div>
         </div>
