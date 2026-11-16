@@ -48,7 +48,14 @@
     toast: document.getElementById('toast-notice'),
     toastMsg: document.getElementById('toast-msg'),
     expandAllBtn: document.getElementById('expand-all-btn'),
-    printBtn: document.getElementById('print-btn')
+    printBtn: document.getElementById('print-btn'),
+    mobileMoreBtn: document.getElementById('mobile-more-btn'),
+    mobileMorePopover: document.getElementById('header-more-popover'),
+    mFontDecBtn: document.getElementById('m-font-dec-btn'),
+    mFontResetBtn: document.getElementById('m-font-reset-btn'),
+    mFontIncBtn: document.getElementById('m-font-inc-btn'),
+    mExpandAllBtn: document.getElementById('m-expand-all-btn'),
+    mExpandText: document.getElementById('m-expand-text')
   };
 
   // Initialize Application
@@ -181,6 +188,11 @@
     if (el.fontDecBtn) el.fontDecBtn.classList.toggle('active', state.fontSizeLevel === 0);
     if (el.fontResetBtn) el.fontResetBtn.classList.toggle('active', state.fontSizeLevel === 1);
     if (el.fontIncBtn) el.fontIncBtn.classList.toggle('active', state.fontSizeLevel >= 2);
+
+    // Update active state on mobile popover buttons
+    if (el.mFontDecBtn) el.mFontDecBtn.classList.toggle('active', state.fontSizeLevel === 0);
+    if (el.mFontResetBtn) el.mFontResetBtn.classList.toggle('active', state.fontSizeLevel === 1);
+    if (el.mFontIncBtn) el.mFontIncBtn.classList.toggle('active', state.fontSizeLevel >= 2);
 
     if (showNotice) {
       const labels = ['តូច (14px)', 'ធម្មតា (16px)', 'ធំ (18px)', 'ធំខ្លាំង (20px)'];
@@ -1330,6 +1342,7 @@
               <polyline points="17 18 12 13 7 18"></polyline>
             </svg>
           `;
+          if (el.mExpandText) el.mExpandText.textContent = 'បង្រួមមាតិកាទាំងអស់';
           showToast('បានបើកពង្រីកមាតិកាទាំងអស់');
         } else {
           allChapters.forEach(c => c.classList.remove('open'));
@@ -1342,9 +1355,31 @@
               <polyline points="7 6 12 11 17 6"></polyline>
             </svg>
           `;
+          if (el.mExpandText) el.mExpandText.textContent = 'ពង្រីកមាតិកាទាំងអស់';
           showToast('បានបង្រួមមាតិកាទាំងអស់');
         }
       });
+    }
+
+    // Connect mobile popover font & expand buttons
+    if (el.mFontDecBtn && el.fontDecBtn) el.mFontDecBtn.addEventListener('click', () => el.fontDecBtn.click());
+    if (el.mFontResetBtn && el.fontResetBtn) el.mFontResetBtn.addEventListener('click', () => el.fontResetBtn.click());
+    if (el.mFontIncBtn && el.fontIncBtn) el.mFontIncBtn.addEventListener('click', () => el.fontIncBtn.click());
+    if (el.mExpandAllBtn && el.expandAllBtn) el.mExpandAllBtn.addEventListener('click', () => el.expandAllBtn.click());
+
+    // Fallback for older browsers without native popover support
+    if (el.mobileMoreBtn && el.mobileMorePopover) {
+      if (!('popover' in HTMLElement.prototype)) {
+        el.mobileMoreBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          el.mobileMorePopover.classList.toggle('open-fallback');
+        });
+        document.addEventListener('click', (e) => {
+          if (!el.mobileMorePopover.contains(e.target) && e.target !== el.mobileMoreBtn) {
+            el.mobileMorePopover.classList.remove('open-fallback');
+          }
+        });
+      }
     }
 
     // Print Button

@@ -343,6 +343,94 @@ body {
   display: none;
 }
 
+/* Mobile Quick More Menu Button (hidden by default on desktop) */
+.mobile-more-btn {
+  display: none;
+}
+
+/* Mobile Quick Options Popover */
+.mobile-more-popover {
+  position: fixed;
+  inset: auto;
+  top: calc(var(--header-height, 56px) + 6px);
+  right: 10px;
+  width: 250px;
+  max-width: calc(100dvw - 20px);
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  padding: 14px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+.mobile-more-popover:not(:popover-open):not(.\:popover-open):not(.open-fallback) {
+  display: none;
+}
+
+.mobile-more-popover:is(:popover-open, .\:popover-open, .open-fallback) {
+  display: flex;
+}
+
+.popover-section-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.mobile-font-controls {
+  display: flex;
+  width: 100%;
+}
+
+.mobile-font-controls button {
+  flex: 1;
+  padding: 8px 0;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.popover-divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 2px 0;
+}
+
+.popover-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.popover-action-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-medium);
+  color: var(--color-intro);
+}
+
+.popover-action-btn svg {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+
 /* Main Layout Grid */
 .app-container {
   display: flex;
@@ -1964,21 +2052,71 @@ kbd, .kbd-key {
 }
 
 /* ==========================================================================
-   Responsive Breakpoints
+   Responsive Breakpoints Across All Devices (Mobile, Tablet, Desktop)
    ========================================================================== */
+
+/* Breakpoint 1: Tablets and down (<= 900px) */
 @media (max-width: 900px) {
+  :root {
+    --header-height: 60px;
+  }
+
+  .app-header {
+    height: var(--header-height);
+    padding: 0 14px;
+  }
+
+  .brand-section {
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .brand-logo-wrap {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .brand-text-col {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .brand-title {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .brand-subtitle {
+    font-size: 0.74rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .sidebar {
     position: fixed;
     top: var(--header-height);
     bottom: 0;
     left: 0;
-    width: 320px !important;
+    width: min(320px, 86dvw) !important;
     transform: translateX(-100%);
     box-shadow: var(--shadow-xl);
+    z-index: 50;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
   
   .sidebar.open {
     transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    z-index: 45;
   }
 
   .sidebar-resizer {
@@ -1987,6 +2125,7 @@ kbd, .kbd-key {
   
   .mobile-menu-btn {
     display: flex;
+    flex-shrink: 0;
   }
   
   .content-wrapper {
@@ -2013,6 +2152,203 @@ kbd, .kbd-key {
   
   .tools-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Breakpoint 2: Medium Phones & Tablets (<= 768px) */
+@media (max-width: 768px) {
+  #print-btn {
+    display: none !important;
+  }
+
+  .viewer-actions button {
+    padding: 5px 8px;
+    font-size: 0.78rem;
+  }
+
+  .materials-hero {
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px 16px;
+  }
+
+  .materials-stats-row {
+    gap: 8px;
+  }
+
+  .materials-stat-pill {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .mat-search-wrap {
+    min-width: 100%;
+  }
+}
+
+/* Breakpoint 3: Standard Mobile Phones (<= 600px) */
+@media (max-width: 600px) {
+  :root {
+    --header-height: 56px;
+  }
+
+  .app-header {
+    height: var(--header-height);
+    padding: 0 10px;
+  }
+
+  .brand-section {
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* In main app, hide redundant logo next to hamburger button */
+  body:not(.materials-page) .brand-logo-wrap {
+    display: none !important;
+  }
+
+  /* In materials page, keep logo-wrap as back button with compact size */
+  body.materials-page .brand-logo-wrap {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .brand-text-col {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    justify-content: center;
+  }
+
+  .brand-title {
+    font-size: 0.94rem;
+    font-weight: 700;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .brand-title span:first-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* CRITICAL: Hide long author subtitle in sticky header on mobile to prevent vertical collision! */
+  .brand-subtitle {
+    display: none !important;
+  }
+
+  .header-actions {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .header-actions .btn-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 0.9rem;
+  }
+
+  /* Hide inline controls that take up too much width on mobile */
+  .font-controls:not(.mobile-font-controls) {
+    display: none !important;
+  }
+
+  #expand-all-btn {
+    display: none !important;
+  }
+
+  /* Show mobile quick settings / more options button */
+  .mobile-more-btn {
+    display: flex !important;
+  }
+
+  .sidebar {
+    width: min(320px, 86dvw) !important;
+  }
+
+  .viewer-topbar {
+    padding: 8px 10px;
+  }
+
+  .breadcrumbs {
+    font-size: 0.76rem;
+    gap: 4px;
+  }
+
+  .content-wrapper {
+    padding: 16px 10px 50px 10px;
+  }
+
+  .feature-card, .tool-card, .exercise-card {
+    padding: 16px;
+  }
+
+  .hero-banner {
+    padding: 20px 14px;
+  }
+
+  .materials-wrapper {
+    padding: 14px 10px 40px 10px;
+  }
+
+  .materials-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .mat-item-card {
+    padding: 14px;
+  }
+
+  .mat-download-btn {
+    padding: 7px 12px !important;
+    font-size: 0.82rem !important;
+  }
+}
+
+/* Breakpoint 4: Narrow / Small Mobile Screens (<= 420px) */
+@media (max-width: 420px) {
+  .app-header {
+    padding: 0 8px;
+  }
+
+  .brand-section {
+    gap: 6px;
+  }
+
+  .brand-title {
+    font-size: 0.88rem;
+  }
+
+  .brand-badge {
+    display: none !important;
+  }
+
+  .header-actions {
+    gap: 4px;
+  }
+
+  .header-actions .btn-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .mobile-menu-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .btn-label-text {
+    display: none !important;
   }
 }
 

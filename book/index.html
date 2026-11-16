@@ -90,8 +90,51 @@
       <button class="btn-icon" id="theme-toggle-btn" title="ប្ដូរពន្លឺ (Dark / Light Mode)">
         🌙
       </button>
+
+      <!-- Mobile Quick Menu Button (shown only on mobile <= 600px) -->
+      <button class="btn-icon mobile-more-btn" id="mobile-more-btn" popovertarget="header-more-popover" title="មុខងារបន្ថែម (More Tools)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="1.5"></circle>
+          <circle cx="12" cy="5" r="1.5"></circle>
+          <circle cx="12" cy="19" r="1.5"></circle>
+        </svg>
+      </button>
     </div>
   </header>
+
+  <!-- Mobile More Options Popover -->
+  <div id="header-more-popover" popover="auto" class="mobile-more-popover">
+    <div class="popover-section-title">កំណត់ទំហំអក្សរ (Font Size)</div>
+    <div class="font-controls mobile-font-controls">
+      <button id="m-font-dec-btn" title="តូច (14px)">A-</button>
+      <button id="m-font-reset-btn" class="active" title="ធម្មតា (16px)">A</button>
+      <button id="m-font-inc-btn" title="ធំ (18px/20px)">A+</button>
+    </div>
+    <div class="popover-divider"></div>
+    <button class="popover-action-btn" id="m-expand-all-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="7 13 12 18 17 13"></polyline>
+        <polyline points="7 6 12 11 17 6"></polyline>
+      </svg>
+      <span id="m-expand-text">ពង្រីកមាតិកាទាំងអស់</span>
+    </button>
+    <button class="popover-action-btn" onclick="window.print()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+        <rect x="6" y="14" width="12" height="8"></rect>
+      </svg>
+      <span>បោះពុម្ពមេរៀន</span>
+    </button>
+    <a href="materials.html" target="_blank" class="popover-action-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+        <polyline points="12 11 12 17"></polyline>
+        <polyline points="9 14 12 17 15 14"></polyline>
+      </svg>
+      <span>មជ្ឈមណ្ឌលឯកសារ Kora</span>
+    </a>
+  </div>
 
   <!-- Main Application Container -->
   <div class="app-container" id="app-container">

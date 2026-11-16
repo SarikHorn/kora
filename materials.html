@@ -11,7 +11,7 @@
   <!-- Local Stylesheet -->
   <link rel="stylesheet" href="assets/style.css">
 
-  <!-- Embedded Guaranteed Styles for Materials (immune to browser CSS caching) -->
+  <!-- Embedded Guaranteed Responsive Styles for Materials -->
   <style>
     .mat-download-btn {
       background: #185abd !important;
@@ -92,9 +92,104 @@
       background: rgba(245, 158, 11, 0.2);
       color: #fbbf24;
     }
+
+    /* Mobile Responsive Header for Materials Page */
+    @media (max-width: 600px) {
+      .app-header {
+        height: 56px !important;
+        padding: 0 10px !important;
+      }
+      .brand-section {
+        gap: 8px !important;
+        min-width: 0 !important;
+        flex: 1 !important;
+        overflow: hidden !important;
+      }
+      .brand-logo-wrap {
+        width: 34px !important;
+        height: 34px !important;
+        flex-shrink: 0 !important;
+      }
+      .brand-text-col {
+        min-width: 0 !important;
+        flex: 1 !important;
+        overflow: hidden !important;
+        justify-content: center !important;
+      }
+      .brand-title {
+        font-size: 0.92rem !important;
+        font-weight: 700 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+      }
+      .brand-title span:first-child {
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+      .brand-subtitle {
+        display: none !important;
+      }
+      .header-actions {
+        gap: 6px !important;
+        flex-shrink: 0 !important;
+      }
+      .header-actions .btn-icon {
+        width: 34px !important;
+        height: 34px !important;
+      }
+      .materials-wrapper {
+        padding: 14px 10px 40px 10px !important;
+      }
+      .materials-hero {
+        flex-direction: column !important;
+        padding: 18px 14px !important;
+        gap: 14px !important;
+      }
+      .materials-hero-title {
+        font-size: 1.25rem !important;
+      }
+      .materials-stats-row {
+        gap: 8px !important;
+      }
+      .materials-stat-pill {
+        padding: 6px 10px !important;
+        font-size: 0.78rem !important;
+      }
+      .materials-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .mat-search-wrap {
+        min-width: 100% !important;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .app-header {
+        padding: 0 8px !important;
+      }
+      .brand-title {
+        font-size: 0.86rem !important;
+      }
+      .brand-badge {
+        display: none !important;
+      }
+      .btn-label-text {
+        display: none !important;
+      }
+      .header-actions .btn-icon {
+        width: 32px !important;
+        height: 32px !important;
+      }
+    }
   </style>
 </head>
-<body>
+<body class="materials-page">
 
   <!-- Top Navigation Header -->
   <header class="app-header">
@@ -123,7 +218,7 @@
       <!-- Back to Textbook Button -->
       <a href="index.html" class="btn-text" style="text-decoration: none; font-weight: 700; color: var(--primary);" title="ត្រឡប់ទៅទំព័រសៀវភៅ">
         <span>📖</span>
-        <span>សៀវភៅមេរៀន</span>
+        <span class="btn-label-text">សៀវភៅមេរៀន</span>
       </a>
 
       <!-- Theme Toggle -->
