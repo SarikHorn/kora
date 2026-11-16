@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="km">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>មជ្ឈមណ្ឌលឯកសារមេរៀន & កិច្ចការ | Kora Materials</title>
-  
+
   <!-- Favicon SVG -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23185ABD'><path d='M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5zm3 3v8h2V8H7zm4 0v8h2V8h-2zm4 0v8h2V8h-2z'/></svg>">
-  
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23185ABD'><path d='M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5zm3 3v8h2V8H7zm4 0v8h2V8h-2zm4 0v8h2V8h-2z'/></svg>">
+
   <!-- Local Stylesheet -->
   <link rel="stylesheet" href="assets/style.css">
 
-  <!-- Embedded Guaranteed Responsive Styles for Materials -->
+  <!-- Embedded Guaranteed Styles for Materials (immune to browser CSS caching) -->
   <style>
     .mat-download-btn {
       background: #185abd !important;
@@ -30,19 +32,23 @@
       box-shadow: 0 2px 6px rgba(24, 90, 189, 0.3) !important;
       transition: all 0.2s ease !important;
     }
+
     .mat-download-btn:hover {
       background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%) !important;
       box-shadow: 0 4px 12px rgba(24, 90, 189, 0.45) !important;
       transform: translateY(-2px) !important;
       color: #ffffff !important;
     }
+
     .mat-download-btn:active {
       transform: translateY(0) !important;
     }
+
     .mat-download-btn svg {
       flex-shrink: 0;
       stroke: #ffffff !important;
     }
+
     .mat-copy-btn {
       background: var(--bg-secondary, #f1f5f9) !important;
       border: 1px solid var(--border-medium, #cbd5e1) !important;
@@ -57,11 +63,13 @@
       gap: 6px !important;
       transition: all 0.15s ease !important;
     }
+
     .mat-copy-btn:hover {
       background: var(--bg-hover, #e2e8f0) !important;
       color: var(--text-primary, #0f172a) !important;
       border-color: var(--border-dark, #94a3b8) !important;
     }
+
     .mat-folder-tag {
       display: inline-flex;
       align-items: center;
@@ -76,126 +84,37 @@
       margin-left: 4px;
       transition: all 0.15s ease;
     }
+
     .mat-folder-tag:hover {
       background: rgba(245, 158, 11, 0.22);
       color: #92400e;
     }
+
     [data-theme="dark"] .mat-download-btn {
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
       border-color: rgba(37, 99, 235, 0.5) !important;
       box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35) !important;
     }
+
     [data-theme="dark"] .mat-download-btn:hover {
       background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
     }
+
     [data-theme="dark"] .mat-folder-tag {
       background: rgba(245, 158, 11, 0.2);
       color: #fbbf24;
     }
-
-    /* Mobile Responsive Header for Materials Page */
-    @media (max-width: 600px) {
-      .app-header {
-        height: 56px !important;
-        padding: 0 10px !important;
-      }
-      .brand-section {
-        gap: 8px !important;
-        min-width: 0 !important;
-        flex: 1 !important;
-        overflow: hidden !important;
-      }
-      .brand-logo-wrap {
-        width: 34px !important;
-        height: 34px !important;
-        flex-shrink: 0 !important;
-      }
-      .brand-text-col {
-        min-width: 0 !important;
-        flex: 1 !important;
-        overflow: hidden !important;
-        justify-content: center !important;
-      }
-      .brand-title {
-        font-size: 0.92rem !important;
-        font-weight: 700 !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 6px !important;
-      }
-      .brand-title span:first-child {
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-      }
-      .brand-subtitle {
-        display: none !important;
-      }
-      .header-actions {
-        gap: 6px !important;
-        flex-shrink: 0 !important;
-      }
-      .header-actions .btn-icon {
-        width: 34px !important;
-        height: 34px !important;
-      }
-      .materials-wrapper {
-        padding: 14px 10px 40px 10px !important;
-      }
-      .materials-hero {
-        flex-direction: column !important;
-        padding: 18px 14px !important;
-        gap: 14px !important;
-      }
-      .materials-hero-title {
-        font-size: 1.25rem !important;
-      }
-      .materials-stats-row {
-        gap: 8px !important;
-      }
-      .materials-stat-pill {
-        padding: 6px 10px !important;
-        font-size: 0.78rem !important;
-      }
-      .materials-grid {
-        grid-template-columns: 1fr !important;
-        gap: 12px !important;
-      }
-      .mat-search-wrap {
-        min-width: 100% !important;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .app-header {
-        padding: 0 8px !important;
-      }
-      .brand-title {
-        font-size: 0.86rem !important;
-      }
-      .brand-badge {
-        display: none !important;
-      }
-      .btn-label-text {
-        display: none !important;
-      }
-      .header-actions .btn-icon {
-        width: 32px !important;
-        height: 32px !important;
-      }
-    }
   </style>
 </head>
-<body class="materials-page">
+
+<body>
 
   <!-- Top Navigation Header -->
   <header class="app-header">
     <div class="brand-section">
       <a href="index.html" class="brand-logo-wrap" title="ត្រឡប់ទៅសៀវភៅមេរៀន" style="text-decoration: none;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
           <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
           <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
         </svg>
@@ -207,7 +126,8 @@
           <span class="brand-badge" style="background: rgba(16, 124, 65, 0.12); color: #107C41;">Kora Repo</span>
         </div>
         <div class="brand-subtitle" style="display: flex; align-items: center; gap: 6px;">
-          <img src="assets/images/pc_profile.png" alt="SARIK HORN" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-medium); flex-shrink: 0;" />
+          <img src="assets/images/pc_profile.png" alt="SARIK HORN"
+            style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-medium); flex-shrink: 0;" />
           <span>គ្រូគង្វាល សារិក ហោន • សាលាទេវវិទ្យា CPTIs</span>
         </div>
       </div>
@@ -216,9 +136,10 @@
     <!-- Header Actions -->
     <div class="header-actions">
       <!-- Back to Textbook Button -->
-      <a href="index.html" class="btn-text" style="text-decoration: none; font-weight: 700; color: var(--primary);" title="ត្រឡប់ទៅទំព័រសៀវភៅ">
+      <a href="index.html" class="btn-text" style="text-decoration: none; font-weight: 700; color: var(--primary);"
+        title="ត្រឡប់ទៅទំព័រសៀវភៅ">
         <span>📖</span>
-        <span class="btn-label-text">សៀវភៅមេរៀន</span>
+        <span>សៀវភៅមេរៀន</span>
       </a>
 
       <!-- Theme Toggle -->
@@ -230,7 +151,7 @@
 
   <!-- Main Materials Content Wrapper -->
   <main class="materials-wrapper">
-    
+
     <!-- Hero Banner -->
     <div class="materials-hero">
       <div>
@@ -238,13 +159,18 @@
           <span>📂 ឯកសារអនុវត្តន៍ និងកិច្ចការមេរៀន (Kora)</span>
         </h1>
         <p class="materials-hero-desc">
-          ឯកសារទាំងអស់ក្នុងទំព័រនេះ ត្រូវបានតភ្ជាប់ស្វ័យប្រវត្តិជាមួយ Folder <strong>kora</strong>។ នៅពេលលោកគ្រូដាក់ឯកសារថ្មីៗបន្ថែម និង Push វានឹងបង្ហាញនៅទីនេះភ្លាមៗ។ សិស្សអាចចុច <strong>«ទាញយក»</strong> ឯកសារមេរៀនមកអនុវត្តលើកុំព្យូទ័របានដោយសេរី។
+          ឯកសារទាំងអស់ក្នុងទំព័រនេះ ត្រូវបានតភ្ជាប់ស្វ័យប្រវត្តិជាមួយ Folder <strong>kora</strong>។
+          នៅពេលលោកគ្រូដាក់ឯកសារថ្មីៗបន្ថែម និង Push វានឹងបង្ហាញនៅទីនេះភ្លាមៗ។ សិស្សអាចចុច <strong>«ទាញយក»</strong>
+          ឯកសារមេរៀនមកអនុវត្តលើកុំព្យូទ័របានដោយសេរី។
         </p>
       </div>
 
       <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <a href="Computer_for_Ministry_CPTIs.zip" download="Computer_for_Ministry_CPTIs.zip" class="mat-refresh-btn" style="text-decoration: none; border-color: rgba(16, 124, 65, 0.4); color: #107c41;" title="ទាញយកសៀវភៅទាំងមូលសម្រាប់រៀន Offline">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <a href="Computer_for_Ministry_CPTIs.zip" download="Computer_for_Ministry_CPTIs.zip" class="mat-refresh-btn"
+          style="text-decoration: none; border-color: rgba(16, 124, 65, 0.4); color: #107c41;"
+          title="ទាញយកសៀវភៅទាំងមូលសម្រាប់រៀន Offline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -253,7 +179,8 @@
         </a>
 
         <button id="refresh-btn" class="mat-refresh-btn" title="ពិនិត្យមើលឯកសារថ្មីៗ">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <polyline points="23 4 23 10 17 10"></polyline>
             <polyline points="1 20 1 14 7 14"></polyline>
             <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
@@ -287,13 +214,8 @@
     <div class="materials-toolbar">
       <div class="mat-search-wrap">
         <span class="mat-search-icon">🔍</span>
-        <input 
-          type="text" 
-          id="mat-search-input" 
-          class="mat-search-input" 
-          placeholder="ស្វែងរកឯកសារតាមឈ្មោះ ឬកន្ទុយ file (Word, Excel, Image...)"
-          autocomplete="off"
-        >
+        <input type="text" id="mat-search-input" class="mat-search-input"
+          placeholder="ស្វែងរកឯកសារតាមឈ្មោះ ឬកន្ទុយ file (Word, Excel, Image...)" autocomplete="off">
       </div>
 
       <!-- Filter Category Buttons -->
@@ -319,15 +241,19 @@
 
     <!-- Loading Spinner & State Container -->
     <div id="loading-state" style="display: none; text-align: center; padding: 60px 20px;">
-      <div style="font-size: 2rem; margin-bottom: 12px; animation: spin 1.2s linear infinite; display: inline-block;">⏳</div>
-      <div style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">កំពុងពិនិត្យមើលឯកសារថ្មីៗពី GitHub...</div>
+      <div style="font-size: 2rem; margin-bottom: 12px; animation: spin 1.2s linear infinite; display: inline-block;">⏳
+      </div>
+      <div style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">
+        កំពុងពិនិត្យមើលឯកសារថ្មីៗពី GitHub...</div>
       <div style="font-size: 0.88rem; color: var(--text-muted);">កំពុងភ្ជាប់ទៅកាន់ឃ្លាំងឯកសារ kora</div>
     </div>
 
     <!-- Empty State Container -->
-    <div id="empty-state" style="display: none; text-align: center; padding: 60px 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px dashed var(--border-medium);">
+    <div id="empty-state"
+      style="display: none; text-align: center; padding: 60px 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px dashed var(--border-medium);">
       <div style="font-size: 2.5rem; margin-bottom: 12px;">📭</div>
-      <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">មិនមានឯកសារនៅក្នុងថតនេះទេ</div>
+      <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">
+        មិនមានឯកសារនៅក្នុងថតនេះទេ</div>
       <div style="font-size: 0.88rem; color: var(--text-muted);">សូមជ្រើសរើសថតផ្សេងទៀត ឬចុចប៊ូតុង Refresh</div>
     </div>
 
@@ -377,9 +303,9 @@
       if (!path) return false;
       const clean = path.toLowerCase();
       if (clean.startsWith('.') || clean.startsWith('book/') || clean === 'book' ||
-          clean.startsWith('assets/') || clean === 'assets' ||
-          clean === 'index.html' || clean === 'materials.html' || clean === 'vercel.json' || 
-          clean.endsWith('.py') || clean.endsWith('.json') || clean.endsWith('.md')) {
+        clean.startsWith('assets/') || clean === 'assets' ||
+        clean === 'index.html' || clean === 'materials.html' || clean === 'vercel.json' ||
+        clean.endsWith('.py') || clean.endsWith('.json') || clean.endsWith('.md')) {
         return false;
       }
       return true;
@@ -417,7 +343,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
       bindEvents();
-      
+
       // Try restoring from localStorage cache if available
       const cached = localStorage.getItem('kora_materials_cache');
       if (cached) {
@@ -550,7 +476,7 @@
     }
 
     // Navigate into a directory
-    window.navigateToFolder = function(path) {
+    window.navigateToFolder = function (path) {
       state.currentPath = (path || '').trim();
       state.searchQuery = '';
       if (el.searchInput) el.searchInput.value = '';
@@ -597,7 +523,7 @@
       if (query || filter !== 'all') {
         // Flat Filter / Search Mode: finds matching files across subfolders!
         const prefix = state.currentPath ? state.currentPath + '/' : '';
-        
+
         itemsToDisplay = state.allItems.filter(item => {
           if (item.type !== 'blob') return false;
           if (prefix && !item.path.startsWith(prefix)) return false;
@@ -754,7 +680,7 @@
     }
 
     // Direct Browser Download Handler (works 100% both offline and online)
-    window.downloadFile = async function(url, filename, relPath) {
+    window.downloadFile = async function (url, filename, relPath) {
       showToast(`កំពុងទាញយក ${filename}...`);
 
       // If running offline via file:// protocol, trigger direct relative download
@@ -833,7 +759,7 @@
     }
 
     // Copy File Download Link
-    window.copyFileLink = function(url) {
+    window.copyFileLink = function (url) {
       if (navigator.clipboard) {
         navigator.clipboard.writeText(url).then(() => {
           showToast('បានចម្លង Link ទាញយកឯកសារ!');
@@ -877,4 +803,5 @@
     }
   </script>
 </body>
+
 </html>
