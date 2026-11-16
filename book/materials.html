@@ -10,89 +10,6 @@
   
   <!-- Local Stylesheet -->
   <link rel="stylesheet" href="assets/style.css">
-
-  <!-- Embedded Guaranteed Styles for Materials (immune to browser CSS caching) -->
-  <style>
-    .mat-download-btn {
-      background: #185abd !important;
-      background: linear-gradient(135deg, #185abd 0%, #1e40af 100%) !important;
-      color: #ffffff !important;
-      border: 1px solid rgba(24, 90, 189, 0.4) !important;
-      border-radius: 8px !important;
-      padding: 8px 16px !important;
-      font-size: 0.88rem !important;
-      font-weight: 700 !important;
-      cursor: pointer !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      text-decoration: none !important;
-      box-shadow: 0 2px 6px rgba(24, 90, 189, 0.3) !important;
-      transition: all 0.2s ease !important;
-    }
-    .mat-download-btn:hover {
-      background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%) !important;
-      box-shadow: 0 4px 12px rgba(24, 90, 189, 0.45) !important;
-      transform: translateY(-2px) !important;
-      color: #ffffff !important;
-    }
-    .mat-download-btn:active {
-      transform: translateY(0) !important;
-    }
-    .mat-download-btn svg {
-      flex-shrink: 0;
-      stroke: #ffffff !important;
-    }
-    .mat-copy-btn {
-      background: var(--bg-secondary, #f1f5f9) !important;
-      border: 1px solid var(--border-medium, #cbd5e1) !important;
-      color: var(--text-secondary, #475569) !important;
-      border-radius: 8px !important;
-      padding: 8px 12px !important;
-      font-size: 0.82rem !important;
-      font-weight: 600 !important;
-      cursor: pointer !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 6px !important;
-      transition: all 0.15s ease !important;
-    }
-    .mat-copy-btn:hover {
-      background: var(--bg-hover, #e2e8f0) !important;
-      color: var(--text-primary, #0f172a) !important;
-      border-color: var(--border-dark, #94a3b8) !important;
-    }
-    .mat-folder-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 2px 8px;
-      border-radius: 6px;
-      background: rgba(245, 158, 11, 0.12);
-      color: #b45309;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-left: 4px;
-      transition: all 0.15s ease;
-    }
-    .mat-folder-tag:hover {
-      background: rgba(245, 158, 11, 0.22);
-      color: #92400e;
-    }
-    [data-theme="dark"] .mat-download-btn {
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
-      border-color: rgba(37, 99, 235, 0.5) !important;
-      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35) !important;
-    }
-    [data-theme="dark"] .mat-download-btn:hover {
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
-    }
-    [data-theme="dark"] .mat-folder-tag {
-      background: rgba(245, 158, 11, 0.2);
-      color: #fbbf24;
-    }
-  </style>
 </head>
 <body>
 
@@ -281,8 +198,7 @@
     function isStudentMaterial(path) {
       if (!path) return false;
       const clean = path.toLowerCase();
-      if (clean.startsWith('.') || clean.startsWith('book/') || clean === 'book' ||
-          clean.startsWith('assets/') || clean === 'assets' ||
+      if (clean.startsWith('book') || clean.startsWith('.') || clean.startsWith('assets') || 
           clean === 'index.html' || clean === 'materials.html' || clean === 'vercel.json' || 
           clean.endsWith('.py') || clean.endsWith('.json') || clean.endsWith('.md')) {
         return false;
@@ -491,7 +407,7 @@
       el.breadcrumbs.innerHTML = html;
     }
 
-    // Render Current View (Directory or Search/Category Filter)
+    // Render Current View (Directory or Search Filter)
     function renderCurrentView() {
       renderBreadcrumbs();
 
@@ -499,27 +415,21 @@
       const query = state.searchQuery;
       const filter = state.activeFilter;
 
-      if (query || filter !== 'all') {
-        // Flat Filter / Search Mode: finds matching files across subfolders!
-        const prefix = state.currentPath ? state.currentPath + '/' : '';
-        
+      if (query) {
+        // Global search mode across the entire repository
         itemsToDisplay = state.allItems.filter(item => {
           if (item.type !== 'blob') return false;
-          if (prefix && !item.path.startsWith(prefix)) return false;
-
-          const matchQuery = !query || item.path.toLowerCase().includes(query);
+          const matchQuery = item.path.toLowerCase().includes(query);
           const matchCat = filterMatch(item.path, filter);
           return matchQuery && matchCat;
         }).map(item => ({
           ...item,
           isDir: false,
           displayName: item.path.split('/').pop(),
-          folderName: item.path.includes('/') ? item.path.substring(0, item.path.lastIndexOf('/')) : ''
+          folderName: item.path.includes('/') ? item.path.substring(0, item.path.lastIndexOf('/')) : 'root'
         }));
-
-        itemsToDisplay.sort((a, b) => a.displayName.localeCompare(b.displayName));
       } else {
-        // Normal Folder Browsing Mode
+        // Folder browsing mode
         const prefix = state.currentPath ? state.currentPath + '/' : '';
         const prefixLen = prefix.length;
 
@@ -554,6 +464,14 @@
         });
 
         itemsToDisplay = Array.from(currentLevelMap.values());
+
+        // Apply category filter
+        if (filter !== 'all') {
+          itemsToDisplay = itemsToDisplay.filter(item => {
+            if (item.isDir) return false;
+            return filterMatch(item.displayName, filter);
+          });
+        }
 
         // Sort: Folders first, then files alphabetically
         itemsToDisplay.sort((a, b) => {
@@ -614,14 +532,6 @@
       // It's a file (blob)
       const { icon, badgeClass, label } = getFileMeta(item.displayName);
       const downloadUrl = RAW_BASE_URL + encodeURI(item.path);
-      const localRelUrl = encodeURI(item.path);
-
-      // If item was displayed in search/filter mode, show which folder it belongs to
-      const folderBadge = item.folderName ? `
-        <span class="mat-folder-tag" onclick="event.stopPropagation(); navigateToFolder('${escapeJsStr(item.folderName)}')" title="ចុចដើម្បីចូលទៅកាន់ថត ${escapeHtml(item.folderName)}">
-          📁 ${escapeHtml(item.folderName)}
-        </span>
-      ` : '';
 
       return `
         <div class="mat-item-card">
@@ -633,12 +543,11 @@
                 <span>${label}</span>
                 <span>•</span>
                 <span>${formatBytes(item.size)}</span>
-                ${folderBadge}
               </div>
             </div>
           </div>
           <div class="mat-card-footer">
-            <button onclick="downloadFile('${escapeJsStr(downloadUrl)}', '${escapeJsStr(item.displayName)}', '${escapeJsStr(localRelUrl)}')" class="mat-download-btn" title="ទាញយកឯកសារ ${escapeHtml(item.displayName)}">
+            <button onclick="downloadFile('${escapeJsStr(downloadUrl)}', '${escapeJsStr(item.displayName)}')" class="mat-download-btn" title="ទាញយកឯកសារ ${escapeHtml(item.displayName)}">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
@@ -658,23 +567,9 @@
       `;
     }
 
-    // Direct Browser Download Handler (works 100% both offline and online)
-    window.downloadFile = async function(url, filename, relPath) {
+    // Direct Browser Download Handler (triggers real download instead of opening image/text in tab)
+    window.downloadFile = async function(url, filename) {
       showToast(`កំពុងទាញយក ${filename}...`);
-
-      // If running offline via file:// protocol, trigger direct relative download
-      if (window.location.protocol === 'file:' && relPath) {
-        const a = document.createElement('a');
-        a.href = relPath;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        showToast(`បានទាញយក ${filename} រួចរាល់!`);
-        return;
-      }
-
-      // Online: try fetch blob for direct browser save
       try {
         const res = await fetch(url);
         if (!res.ok) throw new Error('Fetch failed');
