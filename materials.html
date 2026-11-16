@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>មជ្ឈមណ្ឌលឯកសារមេរៀន & កិច្ចការ | Kora Materials</title>
+  
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23185ABD'><path d='M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5zm3 3v8h2V8H7zm4 0v8h2V8h-2zm4 0v8h2V8h-2z'/></svg>">
+  
+  <!-- Local Stylesheet -->
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="brand-section">
+      <a href="index.html" class="brand-logo-wrap" title="ត្រឡប់ទៅសៀវភៅមេរៀន" style="text-decoration: none;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+      </a>
+
+      <div class="brand-text-col">
+        <div class="brand-title">
+          <span>មជ្ឈមណ្ឌលឯកសារ & កិច្ចការ</span>
+          <span class="brand-badge" style="background: rgba(16, 124, 65, 0.12); color: #107C41;">Kora Repo</span>
+        </div>
+        <div class="brand-subtitle" style="display: flex; align-items: center; gap: 6px;">
+          <img src="assets/images/pc_profile.png" alt="SARIK HORN" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-medium); flex-shrink: 0;" />
+          <span>គ្រូគង្វាល សារិក ហោន • សាលាទេវវិទ្យា CPTIs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <!-- Back to Textbook Button -->
+      <a href="index.html" class="btn-text" style="text-decoration: none; font-weight: 700; color: var(--primary);" title="ត្រឡប់ទៅទំព័រសៀវភៅ">
+        <span>📖</span>
+        <span>សៀវភៅមេរៀន</span>
+      </a>
+
+      <!-- Theme Toggle -->
+      <button class="btn-icon" id="theme-toggle-btn" title="ប្ដូរពន្លឺ (Dark / Light Mode)">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Materials Content Wrapper -->
+  <main class="materials-wrapper">
+    
+    <!-- Hero Banner -->
+    <div class="materials-hero">
+      <div>
+        <h1 class="materials-hero-title">
+          <span>📂 ឯកសារអនុវត្តន៍ និងកិច្ចការមេរៀន (Kora)</span>
+        </h1>
+        <p class="materials-hero-desc">
+          ឯកសារទាំងអស់ក្នុងទំព័រនេះ ត្រូវបានតភ្ជាប់ស្វ័យប្រវត្តិជាមួយ Folder <strong>kora</strong>។ នៅពេលលោកគ្រូដាក់ឯកសារថ្មីៗបន្ថែម និង Push វានឹងបង្ហាញនៅទីនេះភ្លាមៗ។ សិស្សអាចចុច <strong>«ទាញយក»</strong> ឯកសារមេរៀនមកអនុវត្តលើកុំព្យូទ័របានដោយសេរី។
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="Computer_for_Ministry_CPTIs.zip" download="Computer_for_Ministry_CPTIs.zip" class="mat-refresh-btn" style="text-decoration: none; border-color: rgba(16, 124, 65, 0.4); color: #107c41;" title="ទាញយកសៀវភៅទាំងមូលសម្រាប់រៀន Offline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>កញ្ចប់ Offline ZIP</span>
+        </a>
+
+        <button id="refresh-btn" class="mat-refresh-btn" title="ពិនិត្យមើលឯកសារថ្មីៗ">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+          <span>ផ្ទុកទិន្នន័យថ្មី (Refresh)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Statistics & Sync Status -->
+    <div class="materials-stats-row">
+      <div class="materials-stat-pill">
+        <span>📁 ថតឯកសារ៖</span>
+        <strong id="stat-folders-count">0</strong>
+      </div>
+      <div class="materials-stat-pill">
+        <span>📄 ឯកសារសរុប៖</span>
+        <strong id="stat-files-count">0</strong>
+      </div>
+      <div class="materials-stat-pill">
+        <span>💾 ទំហំរួម៖</span>
+        <strong id="stat-total-size">0 KB</strong>
+      </div>
+      <div class="materials-stat-pill" id="sync-status-pill" style="margin-left: auto;">
+        <span>🔄 ស្ថានភាព៖</span>
+        <span id="sync-status-text" style="color: var(--text-muted);">រួចរាល់ (Ready)</span>
+      </div>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="materials-toolbar">
+      <div class="mat-search-wrap">
+        <span class="mat-search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="mat-search-input" 
+          class="mat-search-input" 
+          placeholder="ស្វែងរកឯកសារតាមឈ្មោះ ឬកន្ទុយ file (Word, Excel, Image...)"
+          autocomplete="off"
+        >
+      </div>
+
+      <!-- Filter Category Buttons -->
+      <div class="filter-chips-row" style="margin: 0;">
+        <button class="chip-btn active" data-filter="all">ទាំងអស់</button>
+        <button class="chip-btn" data-filter="word">📘 Word (.docx)</button>
+        <button class="chip-btn" data-filter="excel">📗 Excel (.xlsx)</button>
+        <button class="chip-btn" data-filter="image">🖼️ រូបភាព</button>
+        <button class="chip-btn" data-filter="text">📝 អត្ថបទ</button>
+      </div>
+    </div>
+
+    <!-- Folder Navigation Breadcrumbs -->
+    <div class="materials-nav-bar">
+      <div class="materials-breadcrumbs" id="materials-breadcrumbs">
+        <span class="mat-crumb-item current" onclick="navigateToFolder('')">🏠 kora (ទំព័រដើម)</span>
+      </div>
+
+      <div style="font-size: 0.8rem; color: var(--text-muted);" id="current-folder-counter">
+        បង្ហាញ 0 ឯកសារ
+      </div>
+    </div>
+
+    <!-- Loading Spinner & State Container -->
+    <div id="loading-state" style="display: none; text-align: center; padding: 60px 20px;">
+      <div style="font-size: 2rem; margin-bottom: 12px; animation: spin 1.2s linear infinite; display: inline-block;">⏳</div>
+      <div style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">កំពុងពិនិត្យមើលឯកសារថ្មីៗពី GitHub...</div>
+      <div style="font-size: 0.88rem; color: var(--text-muted);">កំពុងភ្ជាប់ទៅកាន់ឃ្លាំងឯកសារ kora</div>
+    </div>
+
+    <!-- Empty State Container -->
+    <div id="empty-state" style="display: none; text-align: center; padding: 60px 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px dashed var(--border-medium);">
+      <div style="font-size: 2.5rem; margin-bottom: 12px;">📭</div>
+      <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">មិនមានឯកសារនៅក្នុងថតនេះទេ</div>
+      <div style="font-size: 0.88rem; color: var(--text-muted);">សូមជ្រើសរើសថតផ្សេងទៀត ឬចុចប៊ូតុង Refresh</div>
+    </div>
+
+    <!-- Materials Grid Items Container -->
+    <div class="materials-grid" id="materials-grid">
+      <!-- Populated dynamically by JavaScript -->
+    </div>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="toast-notice" id="toast-notice">
+    <span class="toast-icon">✓</span>
+    <span id="toast-msg">បានចម្លង Link រួចរាល់!</span>
+  </div>
+
+  <script>
+    // Configuration for target repository
+    const REPO_OWNER = 'SarikHorn';
+    const REPO_NAME = 'kora';
+    const REPO_BRANCH = 'main';
+    const GITHUB_TREE_API = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/${REPO_BRANCH}?recursive=1`;
+    const RAW_BASE_URL = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}/`;
+
+    // Built-in Practice Materials Snapshot (Guarantees instant load 0ms, 100% offline & immune to GitHub API rate limit)
+    const DEFAULT_MATERIALS = [
+      { path: "Excel", type: "tree" },
+      { path: "Excel/filters functions.xlsx", type: "blob", size: 24326 },
+      { path: "Space replace - practice.txt", type: "blob", size: 2545 },
+      { path: "tap insert", type: "tree" },
+      { path: "tap insert/1. លោកុប្បត្តិ.docx", type: "blob", size: 741844 },
+      { path: "tap insert/Story Text.docx", type: "blob", size: 19344 },
+      { path: "tap insert/homework - image", type: "tree" },
+      { path: "tap insert/homework - image/h1.jpg", type: "blob", size: 30082 },
+      { path: "tap insert/homework - image/h2.jpg", type: "blob", size: 88448 },
+      { path: "tap insert/homework - image/h3.jpg", type: "blob", size: 107176 },
+      { path: "tap insert/homework - image/h4.jpg", type: "blob", size: 101010 },
+      { path: "tap insert/homework - image/h5.jpg", type: "blob", size: 38561 },
+      { path: "tap insert/homework - image/h6.jpg", type: "blob", size: 86798 },
+      { path: "tap insert/text to table.txt", type: "blob", size: 1237 },
+      { path: "tap insert/តារាង.png", type: "blob", size: 62064 },
+      { path: "tap insert/សាច់រឿងខ្មែរ.docx", type: "blob", size: 17142 }
+    ];
+
+    // Filter out system and textbook source code files from student materials view
+    function isStudentMaterial(path) {
+      if (!path) return false;
+      const clean = path.toLowerCase();
+      if (clean.startsWith('book') || clean.startsWith('.') || clean.startsWith('assets') || 
+          clean === 'index.html' || clean === 'materials.html' || clean === 'vercel.json' || 
+          clean.endsWith('.py') || clean.endsWith('.json') || clean.endsWith('.md')) {
+        return false;
+      }
+      return true;
+    }
+
+    // Application State
+    const state = {
+      allItems: DEFAULT_MATERIALS, // Instantly loaded
+      currentPath: '',             // Current directory path ('' is root)
+      searchQuery: '',
+      activeFilter: 'all',
+      theme: localStorage.getItem('agy_theme') || 'light'
+    };
+
+    // DOM Elements
+    const el = {
+      grid: document.getElementById('materials-grid'),
+      loadingState: document.getElementById('loading-state'),
+      emptyState: document.getElementById('empty-state'),
+      breadcrumbs: document.getElementById('materials-breadcrumbs'),
+      searchInput: document.getElementById('mat-search-input'),
+      refreshBtn: document.getElementById('refresh-btn'),
+      filterChips: document.querySelectorAll('.chip-btn'),
+      statFolders: document.getElementById('stat-folders-count'),
+      statFiles: document.getElementById('stat-files-count'),
+      statSize: document.getElementById('stat-total-size'),
+      syncStatusText: document.getElementById('sync-status-text'),
+      currentFolderCounter: document.getElementById('current-folder-counter'),
+      themeToggleBtn: document.getElementById('theme-toggle-btn'),
+      toast: document.getElementById('toast-notice'),
+      toastMsg: document.getElementById('toast-msg')
+    };
+
+    // Initialize Page
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      bindEvents();
+      
+      // Try restoring from localStorage cache if available
+      const cached = localStorage.getItem('kora_materials_cache');
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          if (parsed && parsed.tree && parsed.tree.length > 0) {
+            state.allItems = parsed.tree.filter(i => isStudentMaterial(i.path));
+          }
+        } catch (e) {
+          console.warn('Cache parse error:', e);
+        }
+      }
+
+      // Render immediately with 0 delay
+      updateStats();
+      renderCurrentView();
+
+      // Check GitHub in background for any newly pushed files
+      syncWithGitHub(false);
+    });
+
+    // Theme Management
+    function initTheme() {
+      document.documentElement.setAttribute('data-theme', state.theme);
+      if (el.themeToggleBtn) {
+        el.themeToggleBtn.innerHTML = state.theme === 'dark' ? '☀️' : '🌙';
+        el.themeToggleBtn.addEventListener('click', () => {
+          state.theme = state.theme === 'light' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', state.theme);
+          localStorage.setItem('agy_theme', state.theme);
+          el.themeToggleBtn.innerHTML = state.theme === 'dark' ? '☀️' : '🌙';
+        });
+      }
+    }
+
+    // Bind User Interface Events
+    function bindEvents() {
+      // Refresh Button Click
+      if (el.refreshBtn) {
+        el.refreshBtn.addEventListener('click', () => {
+          el.refreshBtn.classList.add('spinning');
+          syncWithGitHub(true);
+        });
+      }
+
+      // Search Input
+      if (el.searchInput) {
+        el.searchInput.addEventListener('input', (e) => {
+          state.searchQuery = e.target.value.toLowerCase().trim();
+          renderCurrentView();
+        });
+      }
+
+      // Filter Chips
+      el.filterChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          el.filterChips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          state.activeFilter = chip.getAttribute('data-filter') || 'all';
+          renderCurrentView();
+        });
+      });
+    }
+
+    // Sync Repository Tree from GitHub API (Background / On-Demand)
+    async function syncWithGitHub(isManual = false) {
+      if (isManual) {
+        el.syncStatusText.textContent = 'កំពុងតភ្ជាប់...';
+        el.syncStatusText.style.color = '#f59e0b';
+      }
+
+      try {
+        const response = await fetch(GITHUB_TREE_API, {
+          headers: { 'Accept': 'application/vnd.github.v3+json' }
+        });
+
+        if (!response.ok) {
+          throw new Error(`GitHub API error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data && data.tree) {
+          const filtered = data.tree.filter(i => isStudentMaterial(i.path));
+          if (filtered.length > 0) {
+            state.allItems = filtered;
+            localStorage.setItem('kora_materials_cache', JSON.stringify({
+              timestamp: Date.now(),
+              tree: filtered
+            }));
+
+            el.syncStatusText.textContent = 'ទិន្នន័យថ្មីចុងក្រោយ (Live)';
+            el.syncStatusText.style.color = '#107c41';
+            if (isManual) {
+              showToast('បានធ្វើបច្ចុប្បន្នភាពឯកសារជោគជ័យ!');
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('GitHub API Sync notice (using fallback):', err.message);
+        el.syncStatusText.textContent = 'ទិន្នន័យស្រេច (Ready)';
+        el.syncStatusText.style.color = '#107c41';
+        if (isManual) {
+          showToast('ទិន្នន័យត្រូវបានផ្ទុកស្រេចរួចរាល់!');
+        }
+      } finally {
+        if (el.refreshBtn) el.refreshBtn.classList.remove('spinning');
+        updateStats();
+        renderCurrentView();
+      }
+    }
+
+    // Update Top Statistics Bar
+    function updateStats() {
+      let folders = 0;
+      let files = 0;
+      let totalBytes = 0;
+
+      state.allItems.forEach(item => {
+        if (item.type === 'tree') {
+          folders++;
+        } else if (item.type === 'blob') {
+          files++;
+          totalBytes += (item.size || 0);
+        }
+      });
+
+      if (el.statFolders) el.statFolders.textContent = folders;
+      if (el.statFiles) el.statFiles.textContent = files;
+      if (el.statSize) el.statSize.textContent = formatBytes(totalBytes);
+    }
+
+    // Navigate into a directory
+    window.navigateToFolder = function(path) {
+      state.currentPath = (path || '').trim();
+      state.searchQuery = '';
+      if (el.searchInput) el.searchInput.value = '';
+      renderCurrentView();
+    };
+
+    // Render Breadcrumbs Navigation
+    function renderBreadcrumbs() {
+      if (!el.breadcrumbs) return;
+
+      if (!state.currentPath) {
+        el.breadcrumbs.innerHTML = `
+          <span class="mat-crumb-item current">🏠 kora (ថតដើម)</span>
+        `;
+        return;
+      }
+
+      const parts = state.currentPath.split('/');
+      let html = `<span class="mat-crumb-item" onclick="navigateToFolder('')">🏠 kora</span>`;
+      let accumulated = '';
+
+      parts.forEach((part, index) => {
+        accumulated += (index === 0 ? '' : '/') + part;
+        const isLast = index === parts.length - 1;
+        html += ` <span style="color: var(--text-muted);">/</span> `;
+        if (isLast) {
+          html += `<span class="mat-crumb-item current">📁 ${escapeHtml(part)}</span>`;
+        } else {
+          html += `<span class="mat-crumb-item" onclick="navigateToFolder('${escapeJsStr(accumulated)}')">📁 ${escapeHtml(part)}</span>`;
+        }
+      });
+
+      el.breadcrumbs.innerHTML = html;
+    }
+
+    // Render Current View (Directory or Search Filter)
+    function renderCurrentView() {
+      renderBreadcrumbs();
+
+      let itemsToDisplay = [];
+      const query = state.searchQuery;
+      const filter = state.activeFilter;
+
+      if (query) {
+        // Global search mode across the entire repository
+        itemsToDisplay = state.allItems.filter(item => {
+          if (item.type !== 'blob') return false;
+          const matchQuery = item.path.toLowerCase().includes(query);
+          const matchCat = filterMatch(item.path, filter);
+          return matchQuery && matchCat;
+        }).map(item => ({
+          ...item,
+          isDir: false,
+          displayName: item.path.split('/').pop(),
+          folderName: item.path.includes('/') ? item.path.substring(0, item.path.lastIndexOf('/')) : 'root'
+        }));
+      } else {
+        // Folder browsing mode
+        const prefix = state.currentPath ? state.currentPath + '/' : '';
+        const prefixLen = prefix.length;
+
+        const currentLevelMap = new Map();
+
+        state.allItems.forEach(item => {
+          if (!item.path.startsWith(prefix)) return;
+          const subPath = item.path.slice(prefixLen);
+          if (!subPath) return;
+
+          const slashIdx = subPath.indexOf('/');
+          if (slashIdx === -1) {
+            // Direct child in this directory
+            currentLevelMap.set(subPath, {
+              path: item.path,
+              isDir: item.type === 'tree',
+              displayName: subPath,
+              size: item.size || 0
+            });
+          } else {
+            // Subdirectory
+            const dirName = subPath.slice(0, slashIdx);
+            if (!currentLevelMap.has(dirName)) {
+              currentLevelMap.set(dirName, {
+                path: prefix + dirName,
+                isDir: true,
+                displayName: dirName,
+                size: 0
+              });
+            }
+          }
+        });
+
+        itemsToDisplay = Array.from(currentLevelMap.values());
+
+        // Apply category filter
+        if (filter !== 'all') {
+          itemsToDisplay = itemsToDisplay.filter(item => {
+            if (item.isDir) return false;
+            return filterMatch(item.displayName, filter);
+          });
+        }
+
+        // Sort: Folders first, then files alphabetically
+        itemsToDisplay.sort((a, b) => {
+          if (a.isDir && !b.isDir) return -1;
+          if (!a.isDir && b.isDir) return 1;
+          return a.displayName.localeCompare(b.displayName);
+        });
+      }
+
+      if (el.currentFolderCounter) {
+        el.currentFolderCounter.textContent = `បង្ហាញ ${itemsToDisplay.length} ឯកសារ/ថត`;
+      }
+
+      if (itemsToDisplay.length === 0) {
+        el.grid.style.display = 'none';
+        el.emptyState.style.display = 'block';
+        return;
+      }
+
+      el.emptyState.style.display = 'none';
+      el.grid.style.display = 'grid';
+      el.grid.innerHTML = itemsToDisplay.map(item => renderItemCard(item)).join('');
+    }
+
+    // Filter Match Helper
+    function filterMatch(filename, filter) {
+      if (filter === 'all') return true;
+      const lower = filename.toLowerCase();
+      if (filter === 'word') return lower.endsWith('.docx') || lower.endsWith('.doc');
+      if (filter === 'excel') return lower.endsWith('.xlsx') || lower.endsWith('.xls') || lower.endsWith('.csv');
+      if (filter === 'ppt') return lower.endsWith('.pptx') || lower.endsWith('.ppt');
+      if (filter === 'image') return lower.endsWith('.png') || lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.gif') || lower.endsWith('.svg');
+      if (filter === 'text') return lower.endsWith('.txt') || lower.endsWith('.md');
+      return true;
+    }
+
+    // Render an Individual File or Folder Card
+    function renderItemCard(item) {
+      if (item.isDir) {
+        return `
+          <div class="mat-item-card is-dir" onclick="navigateToFolder('${escapeJsStr(item.path)}')">
+            <div class="mat-card-header">
+              <div class="mat-icon-badge dir">📁</div>
+              <div class="mat-name-col">
+                <div class="mat-file-name">${escapeHtml(item.displayName)}</div>
+                <div class="mat-file-meta">
+                  <span>ថតឯកសារ (Folder)</span>
+                </div>
+              </div>
+            </div>
+            <div class="mat-card-footer">
+              <span class="mat-folder-enter-hint">ចុចបើកថតនេះ ➔</span>
+            </div>
+          </div>
+        `;
+      }
+
+      // It's a file (blob)
+      const { icon, badgeClass, label } = getFileMeta(item.displayName);
+      const downloadUrl = RAW_BASE_URL + encodeURI(item.path);
+
+      return `
+        <div class="mat-item-card">
+          <div class="mat-card-header">
+            <div class="mat-icon-badge ${badgeClass}">${icon}</div>
+            <div class="mat-name-col">
+              <div class="mat-file-name" title="${escapeHtml(item.displayName)}">${escapeHtml(item.displayName)}</div>
+              <div class="mat-file-meta">
+                <span>${label}</span>
+                <span>•</span>
+                <span>${formatBytes(item.size)}</span>
+              </div>
+            </div>
+          </div>
+          <div class="mat-card-footer">
+            <button onclick="downloadFile('${escapeJsStr(downloadUrl)}', '${escapeJsStr(item.displayName)}')" class="mat-download-btn" title="ទាញយកឯកសារ ${escapeHtml(item.displayName)}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>ទាញយក</span>
+            </button>
+            <button class="mat-copy-btn" onclick="copyFileLink('${escapeJsStr(downloadUrl)}')" title="ចម្លង Link ទាញយក">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>ចម្លង Link</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Direct Browser Download Handler (triggers real download instead of opening image/text in tab)
+    window.downloadFile = async function(url, filename) {
+      showToast(`កំពុងទាញយក ${filename}...`);
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Fetch failed');
+        const blob = await res.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        showToast(`បានទាញយក ${filename} រួចរាល់!`);
+      } catch (e) {
+        // Fallback for cross-origin or network constraints
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+    };
+
+    // Get File Icon, Color Class and Description Label
+    function getFileMeta(filename) {
+      const lower = filename.toLowerCase();
+      if (lower.endsWith('.docx') || lower.endsWith('.doc')) {
+        return { icon: '📘', badgeClass: 'word', label: 'MS Word' };
+      }
+      if (lower.endsWith('.xlsx') || lower.endsWith('.xls') || lower.endsWith('.csv')) {
+        return { icon: '📗', badgeClass: 'excel', label: 'MS Excel' };
+      }
+      if (lower.endsWith('.pptx') || lower.endsWith('.ppt')) {
+        return { icon: '📙', badgeClass: 'ppt', label: 'PowerPoint' };
+      }
+      if (lower.endsWith('.pdf')) {
+        return { icon: '📕', badgeClass: 'pdf', label: 'PDF Document' };
+      }
+      if (lower.endsWith('.png') || lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.svg')) {
+        return { icon: '🖼️', badgeClass: 'image', label: 'រូបភាព (Image)' };
+      }
+      if (lower.endsWith('.txt') || lower.endsWith('.md')) {
+        return { icon: '📝', badgeClass: 'text', label: 'អត្ថបទ (Text)' };
+      }
+      if (lower.endsWith('.zip') || lower.endsWith('.rar')) {
+        return { icon: '📦', badgeClass: 'text', label: 'កញ្ចប់ Zip' };
+      }
+      return { icon: '📄', badgeClass: 'text', label: 'ឯកសារ' };
+    }
+
+    // Format Bytes into Human-readable string
+    function formatBytes(bytes) {
+      if (!bytes || bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return (bytes / Math.pow(k, i)).toFixed(1) + ' ' + sizes[i];
+    }
+
+    // Copy File Download Link
+    window.copyFileLink = function(url) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('បានចម្លង Link ទាញយកឯកសារ!');
+        }).catch(() => fallbackCopy(url));
+      } else {
+        fallbackCopy(url);
+      }
+    };
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('បានចម្លង Link ទាញយកឯកសារ!');
+    }
+
+    // Show Toast Notification
+    function showToast(msg) {
+      if (!el.toast || !el.toastMsg) return;
+      el.toastMsg.textContent = msg;
+      el.toast.classList.add('show');
+      setTimeout(() => el.toast.classList.remove('show'), 3000);
+    }
+
+    // HTML / String Escape Helpers
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function escapeJsStr(str) {
+      if (!str) return '';
+      return String(str).replace(/'/g, "\\'").replace(/"/g, '\\"');
+    }
+  </script>
+</body>
+</html>

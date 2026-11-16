@@ -101,7 +101,7 @@
       </div>
       <div class="materials-stat-pill" id="sync-status-pill" style="margin-left: auto;">
         <span>🔄 ស្ថានភាព៖</span>
-        <span id="sync-status-text" style="color: var(--text-muted);">កំពុងពិនិត្យ...</span>
+        <span id="sync-status-text" style="color: var(--text-muted);">រួចរាល់ (Ready)</span>
       </div>
     </div>
 
@@ -140,10 +140,10 @@
     </div>
 
     <!-- Loading Spinner & State Container -->
-    <div id="loading-state" style="text-align: center; padding: 60px 20px;">
+    <div id="loading-state" style="display: none; text-align: center; padding: 60px 20px;">
       <div style="font-size: 2rem; margin-bottom: 12px; animation: spin 1.2s linear infinite; display: inline-block;">⏳</div>
-      <div style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">កំពុងផ្ទុកឯកសារពី GitHub...</div>
-      <div style="font-size: 0.88rem; color: var(--text-muted);">កំពុងទាញយកបញ្ជីឯកសារចុងក្រោយបំផុតនៃ kora</div>
+      <div style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">កំពុងពិនិត្យមើលឯកសារថ្មីៗពី GitHub...</div>
+      <div style="font-size: 0.88rem; color: var(--text-muted);">កំពុងភ្ជាប់ទៅកាន់ឃ្លាំងឯកសារ kora</div>
     </div>
 
     <!-- Empty State Container -->
@@ -154,7 +154,7 @@
     </div>
 
     <!-- Materials Grid Items Container -->
-    <div class="materials-grid" id="materials-grid" style="display: none;">
+    <div class="materials-grid" id="materials-grid">
       <!-- Populated dynamically by JavaScript -->
     </div>
 
@@ -174,10 +174,42 @@
     const GITHUB_TREE_API = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/${REPO_BRANCH}?recursive=1`;
     const RAW_BASE_URL = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}/`;
 
+    // Built-in Practice Materials Snapshot (Guarantees instant load 0ms, 100% offline & immune to GitHub API rate limit)
+    const DEFAULT_MATERIALS = [
+      { path: "Excel", type: "tree" },
+      { path: "Excel/filters functions.xlsx", type: "blob", size: 24326 },
+      { path: "Space replace - practice.txt", type: "blob", size: 2545 },
+      { path: "tap insert", type: "tree" },
+      { path: "tap insert/1. លោកុប្បត្តិ.docx", type: "blob", size: 741844 },
+      { path: "tap insert/Story Text.docx", type: "blob", size: 19344 },
+      { path: "tap insert/homework - image", type: "tree" },
+      { path: "tap insert/homework - image/h1.jpg", type: "blob", size: 30082 },
+      { path: "tap insert/homework - image/h2.jpg", type: "blob", size: 88448 },
+      { path: "tap insert/homework - image/h3.jpg", type: "blob", size: 107176 },
+      { path: "tap insert/homework - image/h4.jpg", type: "blob", size: 101010 },
+      { path: "tap insert/homework - image/h5.jpg", type: "blob", size: 38561 },
+      { path: "tap insert/homework - image/h6.jpg", type: "blob", size: 86798 },
+      { path: "tap insert/text to table.txt", type: "blob", size: 1237 },
+      { path: "tap insert/តារាង.png", type: "blob", size: 62064 },
+      { path: "tap insert/សាច់រឿងខ្មែរ.docx", type: "blob", size: 17142 }
+    ];
+
+    // Filter out system and textbook source code files from student materials view
+    function isStudentMaterial(path) {
+      if (!path) return false;
+      const clean = path.toLowerCase();
+      if (clean.startsWith('book') || clean.startsWith('.') || clean.startsWith('assets') || 
+          clean === 'index.html' || clean === 'materials.html' || clean === 'vercel.json' || 
+          clean.endsWith('.py') || clean.endsWith('.json') || clean.endsWith('.md')) {
+        return false;
+      }
+      return true;
+    }
+
     // Application State
     const state = {
-      allItems: [],       // All files and folders from git tree
-      currentPath: '',    // Current directory path ('' is root)
+      allItems: DEFAULT_MATERIALS, // Instantly loaded
+      currentPath: '',             // Current directory path ('' is root)
       searchQuery: '',
       activeFilter: 'all',
       theme: localStorage.getItem('agy_theme') || 'light'
@@ -206,7 +238,26 @@
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
       bindEvents();
-      loadMaterials();
+      
+      // Try restoring from localStorage cache if available
+      const cached = localStorage.getItem('kora_materials_cache');
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          if (parsed && parsed.tree && parsed.tree.length > 0) {
+            state.allItems = parsed.tree.filter(i => isStudentMaterial(i.path));
+          }
+        } catch (e) {
+          console.warn('Cache parse error:', e);
+        }
+      }
+
+      // Render immediately with 0 delay
+      updateStats();
+      renderCurrentView();
+
+      // Check GitHub in background for any newly pushed files
+      syncWithGitHub(false);
     });
 
     // Theme Management
@@ -229,7 +280,7 @@
       if (el.refreshBtn) {
         el.refreshBtn.addEventListener('click', () => {
           el.refreshBtn.classList.add('spinning');
-          loadMaterials(true);
+          syncWithGitHub(true);
         });
       }
 
@@ -252,28 +303,11 @@
       });
     }
 
-    // Fetch Repository Tree from GitHub API
-    async function loadMaterials(forceRefresh = false) {
-      el.syncStatusText.textContent = 'កំពុងតភ្ជាប់...';
-      el.syncStatusText.style.color = '#f59e0b';
-
-      // Check localStorage cache if not force refreshing
-      if (!forceRefresh) {
-        const cached = localStorage.getItem('kora_materials_cache');
-        if (cached) {
-          try {
-            const parsed = JSON.parse(cached);
-            if (parsed && parsed.tree && parsed.tree.length > 0) {
-              state.allItems = parsed.tree;
-              updateStats();
-              renderCurrentView();
-              el.syncStatusText.textContent = 'ទិន្នន័យផ្ទុកពី Cache';
-              el.syncStatusText.style.color = '#107c41';
-            }
-          } catch (e) {
-            console.warn('Failed to parse cached materials:', e);
-          }
-        }
+    // Sync Repository Tree from GitHub API (Background / On-Demand)
+    async function syncWithGitHub(isManual = false) {
+      if (isManual) {
+        el.syncStatusText.textContent = 'កំពុងតភ្ជាប់...';
+        el.syncStatusText.style.color = '#f59e0b';
       }
 
       try {
@@ -287,27 +321,27 @@
 
         const data = await response.json();
         if (data && data.tree) {
-          state.allItems = data.tree;
-          localStorage.setItem('kora_materials_cache', JSON.stringify({
-            timestamp: Date.now(),
-            tree: data.tree
-          }));
+          const filtered = data.tree.filter(i => isStudentMaterial(i.path));
+          if (filtered.length > 0) {
+            state.allItems = filtered;
+            localStorage.setItem('kora_materials_cache', JSON.stringify({
+              timestamp: Date.now(),
+              tree: filtered
+            }));
 
-          el.syncStatusText.textContent = 'ទិន្នន័យថ្មីចុងក្រោយ (Live)';
-          el.syncStatusText.style.color = '#107c41';
-          if (forceRefresh) {
-            showToast('បានធ្វើបច្ចុប្បន្នភាពទិន្នន័យជោគជ័យ!');
+            el.syncStatusText.textContent = 'ទិន្នន័យថ្មីចុងក្រោយ (Live)';
+            el.syncStatusText.style.color = '#107c41';
+            if (isManual) {
+              showToast('បានធ្វើបច្ចុប្បន្នភាពឯកសារជោគជ័យ!');
+            }
           }
         }
       } catch (err) {
-        console.error('Error fetching GitHub tree:', err);
-        if (state.allItems.length === 0) {
-          el.syncStatusText.textContent = 'បរាជ័យ (ទាមទារអ៊ីនធឺណិត)';
-          el.syncStatusText.style.color = '#ef4444';
-          showToast('មិនអាចភ្ជាប់ទៅ GitHub បានទេ សូមពិនិត្យអ៊ីនធឺណិត');
-        } else {
-          el.syncStatusText.textContent = 'ប្រើប្រាស់ទិន្នន័យក្រៅបណ្ដាញ (Offline)';
-          el.syncStatusText.style.color = '#f59e0b';
+        console.warn('GitHub API Sync notice (using fallback):', err.message);
+        el.syncStatusText.textContent = 'ទិន្នន័យស្រេច (Ready)';
+        el.syncStatusText.style.color = '#107c41';
+        if (isManual) {
+          showToast('ទិន្នន័យត្រូវបានផ្ទុកស្រេចរួចរាល់!');
         }
       } finally {
         if (el.refreshBtn) el.refreshBtn.classList.remove('spinning');
@@ -338,7 +372,7 @@
 
     // Navigate into a directory
     window.navigateToFolder = function(path) {
-      state.currentPath = path;
+      state.currentPath = (path || '').trim();
       state.searchQuery = '';
       if (el.searchInput) el.searchInput.value = '';
       renderCurrentView();
@@ -364,9 +398,9 @@
         const isLast = index === parts.length - 1;
         html += ` <span style="color: var(--text-muted);">/</span> `;
         if (isLast) {
-          html += `<span class="mat-crumb-item current">📁 ${part}</span>`;
+          html += `<span class="mat-crumb-item current">📁 ${escapeHtml(part)}</span>`;
         } else {
-          html += `<span class="mat-crumb-item" onclick="navigateToFolder('${accumulated}')">📁 ${part}</span>`;
+          html += `<span class="mat-crumb-item" onclick="navigateToFolder('${escapeJsStr(accumulated)}')">📁 ${escapeHtml(part)}</span>`;
         }
       });
 
@@ -377,9 +411,6 @@
     function renderCurrentView() {
       renderBreadcrumbs();
 
-      el.loadingState.style.display = 'none';
-
-      // Determine items to display
       let itemsToDisplay = [];
       const query = state.searchQuery;
       const filter = state.activeFilter;
@@ -387,7 +418,7 @@
       if (query) {
         // Global search mode across the entire repository
         itemsToDisplay = state.allItems.filter(item => {
-          if (item.type !== 'blob') return false; // only show files in search
+          if (item.type !== 'blob') return false;
           const matchQuery = item.path.toLowerCase().includes(query);
           const matchCat = filterMatch(item.path, filter);
           return matchQuery && matchCat;
@@ -434,7 +465,7 @@
 
         itemsToDisplay = Array.from(currentLevelMap.values());
 
-        // Apply category filter (applies to files only; folders stay visible if filter is all)
+        // Apply category filter
         if (filter !== 'all') {
           itemsToDisplay = itemsToDisplay.filter(item => {
             if (item.isDir) return false;
@@ -492,7 +523,7 @@
               </div>
             </div>
             <div class="mat-card-footer">
-              <span class="mat-folder-enter-hint">ចុចដើម្បីចូលមើល ➔</span>
+              <span class="mat-folder-enter-hint">ចុចបើកថតនេះ ➔</span>
             </div>
           </div>
         `;
@@ -516,14 +547,14 @@
             </div>
           </div>
           <div class="mat-card-footer">
-            <a href="${downloadUrl}" download="${escapeHtml(item.displayName)}" target="_blank" rel="noopener noreferrer" class="mat-download-btn" title="ទាញយកឯកសារ ${escapeHtml(item.displayName)}">
+            <button onclick="downloadFile('${escapeJsStr(downloadUrl)}', '${escapeJsStr(item.displayName)}')" class="mat-download-btn" title="ទាញយកឯកសារ ${escapeHtml(item.displayName)}">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
                 <line x1="12" y1="15" x2="12" y2="3"></line>
               </svg>
               <span>ទាញយក</span>
-            </a>
+            </button>
             <button class="mat-copy-btn" onclick="copyFileLink('${escapeJsStr(downloadUrl)}')" title="ចម្លង Link ទាញយក">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -535,6 +566,35 @@
         </div>
       `;
     }
+
+    // Direct Browser Download Handler (triggers real download instead of opening image/text in tab)
+    window.downloadFile = async function(url, filename) {
+      showToast(`កំពុងទាញយក ${filename}...`);
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Fetch failed');
+        const blob = await res.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        showToast(`បានទាញយក ${filename} រួចរាល់!`);
+      } catch (e) {
+        // Fallback for cross-origin or network constraints
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+    };
 
     // Get File Icon, Color Class and Description Label
     function getFileMeta(filename) {
