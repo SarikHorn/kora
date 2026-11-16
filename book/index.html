@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kora MS Book</title>
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23185ABD'><path d='M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5zm3 3v8h2V8H7zm4 0v8h2V8h-2zm4 0v8h2V8h-2z'/></svg>">
+
+  <!-- Local Stylesheet -->
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+
+  <!-- Top Application Header -->
+  <header class="app-header">
+    <div class="brand-section">
+      <button class="btn-icon mobile-menu-btn" id="mobile-menu-btn" title="បើក/បិទ មាតិកា">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="brand-logo-wrap" onclick="window.appNavigateTo('home')" style="cursor: pointer;"
+        title="ត្រឡប់ទៅទំព័រដើម">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+      </div>
+
+      <div class="brand-text-col">
+        <div class="brand-title">
+          <span>កុំព្យូទ័រសម្រាប់ព័ន្ធកិច្ច</span>
+          <span class="brand-badge">សាលាទេវវិទ្យា CPTIs</span>
+        </div>
+        <div class="brand-subtitle" style="display: flex; align-items: center; gap: 6px;">
+          <img src="assets/images/pc_profile.png" alt="SARIK HORN"
+            style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-medium); flex-shrink: 0;" />
+          <span>គ្រូគង្វាល សារិក ហោន (SARIK HORN) • Hope Mission Church</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <!-- Font Size Controller (A-, A, A+) -->
+      <div class="font-controls" title="កំណត់ទំហំអក្សរ">
+        <button id="font-dec-btn" title="អក្សរតូច (14px)">A-</button>
+        <button id="font-reset-btn" class="active" title="អក្សរធម្មតា (16px)">A</button>
+        <button id="font-inc-btn" title="អក្សរធំ (18px / 20px)">A+</button>
+      </div>
+
+      <!-- Expand / Collapse All Toggle Button -->
+      <button class="btn-icon" id="expand-all-btn" title="ពង្រីកមាតិកាទាំងអស់ (Expand All)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="7 13 12 18 17 13"></polyline>
+          <polyline points="7 6 12 11 17 6"></polyline>
+        </svg>
+      </button>
+
+      <!-- Print Button -->
+      <button class="btn-icon" id="print-btn" title="បោះពុម្ពមេរៀន (Print)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+      </button>
+
+      <!-- Materials Repository Button (Opens Kora Materials Page) -->
+      <a href="materials.html" target="_blank" class="btn-icon btn-github" title="មជ្ឈមណ្ឌលឯកសារអនុវត្តន៍ & កិច្ចការ (Kora Materials)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          <polyline points="12 11 12 17"></polyline>
+          <polyline points="9 14 12 17 15 14"></polyline>
+        </svg>
+      </a>
+
+      <!-- Dark / Light Theme Toggle -->
+      <button class="btn-icon" id="theme-toggle-btn" title="ប្ដូរពន្លឺ (Dark / Light Mode)">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Application Container -->
+  <div class="app-container" id="app-container">
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+    <!-- Column 1: Sidebar (Tree Navigation / Dropdown Menu) -->
+    <aside class="sidebar" id="sidebar">
+
+      <!-- Pinned Home Navigation Item -->
+      <div class="home-nav-item active" id="home-nav-btn" onclick="window.appNavigateTo('home')">
+        <span class="home-icon">🏠</span>
+        <span>ទំព័រដើម & ព័ត៌មានសៀវភៅ</span>
+      </div>
+
+      <!-- Search & Horizontal Scrollable Filters -->
+      <div class="sidebar-search-box">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" class="search-input"
+            placeholder="ស្វែងរកឧបករណ៍ រូបមន្ត ផ្លូវកាត់... (Ctrl+K)" autocomplete="off" spellcheck="false">
+          <button id="search-clear-btn" class="search-clear-btn" title="សម្អាត">✕</button>
+        </div>
+
+        <!-- Filter Chips Container with Horizontal Scroll & Arrows -->
+        <div class="filter-chips-container">
+          <button class="chip-scroll-arrow left" id="chip-scroll-left" title="រំកិលទៅឆ្វេង">‹</button>
+          <div class="filter-chips-row" id="filter-chips-row">
+            <button class="chip-btn active" data-mod="all">ទាំងអស់</button>
+            <button class="chip-btn" data-mod="word">📘 Word</button>
+            <button class="chip-btn" data-mod="powerpoint">📙 PowerPoint</button>
+            <button class="chip-btn" data-mod="excel">📗 Excel</button>
+            <button class="chip-btn" data-mod="shortcuts">⌨️ Shortcuts</button>
+            <button class="chip-btn" data-mod="exercises">📝 កិច្ចការផ្ទះ</button>
+          </div>
+          <button class="chip-scroll-arrow right" id="chip-scroll-right" title="រំកិលទៅស្ដាំ">›</button>
+        </div>
+      </div>
+
+      <!-- Tree Hierarchy Container (Parent > Child > Children) -->
+      <div class="sidebar-tree" id="sidebar-tree">
+        <!-- Injected dynamically by app.js -->
+      </div>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <span>ពួកជំនុំបេសកកម្មនៃក្ដីសង្ឃឹម</span>
+        <span>សាលាទេវវិទ្យា CPTIs</span>
+      </div>
+    </aside>
+
+    <!-- Draggable Column Resizer Divider -->
+    <div class="sidebar-resizer" id="sidebar-resizer"
+      title="ចុចទាញពង្រីក/បង្រួម Column (Double-click ដើម្បី Reset 370px)">
+      <div class="resizer-handle"></div>
+    </div>
+
+    <!-- Column 2: Main Content Viewer (Detail Panel) -->
+    <main class="main-viewer" id="main-viewer">
+
+      <!-- Top Sticky Breadcrumb Bar -->
+      <div class="viewer-topbar">
+        <div class="breadcrumbs" id="breadcrumbs">
+          <!-- Injected dynamically by app.js -->
+        </div>
+
+        <div class="viewer-actions">
+          <button class="btn-text" onclick="window.print()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            <span>បោះពុម្ព</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Article / Topic Display Wrapper -->
+      <div class="content-wrapper" id="viewer-content">
+        <!-- Injected dynamically by app.js -->
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Image Lightbox Modal for Screenshots -->
+  <div class="lightbox-modal" id="lightbox-modal">
+    <button class="lightbox-close" id="lightbox-close" title="បិទ (Esc)">✕</button>
+    <img src="" id="lightbox-img" class="lightbox-img" alt="រូបភាពពង្រីកធំ" />
+  </div>
+
+  <!-- Toast Notice -->
+  <div class="toast-notice" id="toast-notice">
+    <span>✅</span>
+    <span id="toast-msg">បានចម្លងរួចរាល់!</span>
+  </div>
+
+  <!-- Load Local Data Script (Offline Ready) -->
+  <script src="assets/book_data.js"></script>
+
+  <!-- Load Main Application Logic -->
+  <script src="assets/app.js"></script>
+</body>
+
+</html>
