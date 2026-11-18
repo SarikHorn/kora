@@ -13,7 +13,7 @@
   <!-- Local Stylesheet -->
   <link rel="stylesheet" href="assets/style.css">
 
-  <!-- Embedded Guaranteed Styles for Materials (immune to browser CSS caching) -->
+  <!-- Embedded Guaranteed Responsive & Image Thumbnail Styles -->
   <style>
     .mat-download-btn {
       background: #185abd !important;
@@ -90,6 +90,177 @@
       color: #92400e;
     }
 
+    /* Thumbnail Preview for Images */
+    .mat-thumb-preview {
+      width: 82px;
+      height: 62px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: var(--bg-secondary, #f1f5f9);
+      border: 1px solid var(--border-medium, #cbd5e1);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .mat-thumb-preview:hover {
+      transform: scale(1.05);
+      border-color: var(--primary, #185abd);
+      box-shadow: 0 4px 12px rgba(24, 90, 189, 0.25);
+    }
+
+    .mat-thumb-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .mat-thumb-preview:hover img {
+      transform: scale(1.08);
+    }
+
+    .mat-thumb-hover-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .mat-thumb-preview:hover .mat-thumb-hover-overlay {
+      opacity: 1;
+    }
+
+    .mat-file-name.is-clickable-image:hover {
+      color: var(--primary, #185abd);
+      text-decoration: underline;
+    }
+
+    /* Lightbox Modal Dialog */
+    dialog.image-lightbox-dialog {
+      border: none;
+      border-radius: 14px;
+      background: var(--bg-card, #ffffff);
+      color: var(--text-primary);
+      max-width: min(920px, 94dvw);
+      max-height: 92dvh;
+      padding: 0;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      margin: auto;
+    }
+
+    dialog.image-lightbox-dialog::backdrop {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(4px);
+      overflow: hidden;
+      overscroll-behavior: contain;
+    }
+
+    dialog.image-lightbox-dialog:modal {
+      overscroll-behavior: contain;
+    }
+
+    .lightbox-content {
+      display: flex;
+      flex-direction: column;
+      max-height: 92dvh;
+    }
+
+    .lightbox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border-light, #e2e8f0);
+      background: var(--bg-secondary, #f8fafc);
+      gap: 12px;
+    }
+
+    .lightbox-title {
+      margin: 0;
+      font-size: 0.98rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lightbox-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lightbox-body {
+      padding: 14px;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #090d16;
+    }
+
+    .lightbox-body img {
+      max-width: 100%;
+      max-height: calc(88dvh - 80px);
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-close-btn {
+      background: transparent;
+      border: 1px solid var(--border-medium, #cbd5e1);
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all 0.15s ease;
+    }
+
+    .lightbox-close-btn:hover {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
+    }
+
+    .lightbox-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #185abd;
+      color: #ffffff !important;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .lightbox-btn:hover {
+      background: #1e40af;
+    }
+
     [data-theme="dark"] .mat-download-btn {
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
       border-color: rgba(37, 99, 235, 0.5) !important;
@@ -104,10 +275,143 @@
       background: rgba(245, 158, 11, 0.2);
       color: #fbbf24;
     }
+
+    [data-theme="dark"] dialog.image-lightbox-dialog {
+      background: #1e293b;
+    }
+
+    [data-theme="dark"] .lightbox-header {
+      background: #0f172a;
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="dark"] .mat-thumb-preview {
+      background: #1e293b;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Mobile Responsive Header for Materials Page */
+    @media (max-width: 600px) {
+      .app-header {
+        height: 56px !important;
+        padding: 0 10px !important;
+      }
+
+      .brand-section {
+        gap: 8px !important;
+        min-width: 0 !important;
+        flex: 1 !important;
+        overflow: hidden !important;
+      }
+
+      .brand-logo-wrap {
+        width: 34px !important;
+        height: 34px !important;
+        flex-shrink: 0 !important;
+      }
+
+      .brand-text-col {
+        min-width: 0 !important;
+        flex: 1 !important;
+        overflow: hidden !important;
+        justify-content: center !important;
+      }
+
+      .brand-title {
+        font-size: 0.92rem !important;
+        font-weight: 700 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+      }
+
+      .brand-title span:first-child {
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+
+      .brand-subtitle {
+        display: none !important;
+      }
+
+      .header-actions {
+        gap: 6px !important;
+        flex-shrink: 0 !important;
+      }
+
+      .header-actions .btn-icon {
+        width: 34px !important;
+        height: 34px !important;
+      }
+
+      .materials-wrapper {
+        padding: 14px 10px 40px 10px !important;
+      }
+
+      .materials-hero {
+        flex-direction: column !important;
+        padding: 18px 14px !important;
+        gap: 14px !important;
+      }
+
+      .materials-hero-title {
+        font-size: 1.25rem !important;
+      }
+
+      .materials-stats-row {
+        gap: 8px !important;
+      }
+
+      .materials-stat-pill {
+        padding: 6px 10px !important;
+        font-size: 0.78rem !important;
+      }
+
+      .materials-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+
+      .mat-search-wrap {
+        min-width: 100% !important;
+      }
+
+      .mat-thumb-preview {
+        width: 70px !important;
+        height: 54px !important;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .app-header {
+        padding: 0 8px !important;
+      }
+
+      .brand-title {
+        font-size: 0.86rem !important;
+      }
+
+      .brand-badge {
+        display: none !important;
+      }
+
+      .btn-label-text {
+        display: none !important;
+      }
+
+      .header-actions .btn-icon {
+        width: 32px !important;
+        height: 32px !important;
+      }
+    }
   </style>
 </head>
 
-<body>
+<body class="materials-page">
 
   <!-- Top Navigation Header -->
   <header class="app-header">
@@ -139,7 +443,7 @@
       <a href="index.html" class="btn-text" style="text-decoration: none; font-weight: 700; color: var(--primary);"
         title="ត្រឡប់ទៅទំព័រសៀវភៅ">
         <span>📖</span>
-        <span>សៀវភៅមេរៀន</span>
+        <span class="btn-label-text">សៀវភៅមេរៀន</span>
       </a>
 
       <!-- Theme Toggle -->
@@ -264,6 +568,29 @@
 
   </main>
 
+  <!-- Image Lightbox Modal Dialog (Native Web Standard) -->
+  <dialog id="image-lightbox-dialog" class="image-lightbox-dialog" aria-labelledby="lightbox-title">
+    <div class="lightbox-content">
+      <div class="lightbox-header">
+        <h3 id="lightbox-title" class="lightbox-title">មើលរូបភាព</h3>
+        <div class="lightbox-actions">
+          <button type="button" id="lightbox-download-btn" class="lightbox-btn" title="ទាញយក">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>ទាញយក</span>
+          </button>
+          <button type="button" class="lightbox-close-btn" id="lightbox-close-btn" title="បិទ (Esc)">✕</button>
+        </div>
+      </div>
+      <div class="lightbox-body">
+        <img id="lightbox-img" src="" alt="រូបភាពកិច្ចការ" loading="lazy">
+      </div>
+    </div>
+  </dialog>
+
   <!-- Toast Notification -->
   <div class="toast-notice" id="toast-notice">
     <span class="toast-icon">✓</span>
@@ -311,6 +638,14 @@
       return true;
     }
 
+    // Check if a file is an image
+    function isImageFile(filename) {
+      if (!filename) return false;
+      const lower = filename.toLowerCase();
+      return lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.png') ||
+        lower.endsWith('.gif') || lower.endsWith('.webp') || lower.endsWith('.svg');
+    }
+
     // Application State
     const state = {
       allItems: DEFAULT_MATERIALS, // Instantly loaded
@@ -343,6 +678,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
       bindEvents();
+      initLightbox();
 
       // Try restoring from localStorage cache if available
       const cached = localStorage.getItem('kora_materials_cache');
@@ -407,6 +743,60 @@
         });
       });
     }
+
+    // Initialize Lightbox Modal
+    function initLightbox() {
+      const dialog = document.getElementById('image-lightbox-dialog');
+      const closeBtn = document.getElementById('lightbox-close-btn');
+
+      if (dialog) {
+        // Close on clicking backdrop
+        dialog.addEventListener('click', (e) => {
+          const rect = dialog.getBoundingClientRect();
+          const isInDialog = (
+            rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+            rect.left <= e.clientX && e.clientX <= rect.left + rect.width
+          );
+          if (!isInDialog) {
+            dialog.close();
+          }
+        });
+      }
+
+      if (closeBtn && dialog) {
+        closeBtn.addEventListener('click', () => {
+          dialog.close();
+        });
+      }
+    }
+
+    // Open Image Lightbox
+    window.openImageLightbox = function (src, title, localUrl) {
+      const dialog = document.getElementById('image-lightbox-dialog');
+      const img = document.getElementById('lightbox-img');
+      const titleEl = document.getElementById('lightbox-title');
+      const downloadBtn = document.getElementById('lightbox-download-btn');
+      if (!dialog || !img) return;
+
+      // Prefer localUrl if offline, fallback to online src
+      const displaySrc = (window.location.protocol === 'file:' && localUrl) ? localUrl : src;
+      img.src = displaySrc;
+      img.onerror = () => { img.src = src; }; // fallback to online raw url if local fails
+
+      if (titleEl) titleEl.textContent = title || 'រូបភាព';
+      if (downloadBtn) {
+        downloadBtn.onclick = (e) => {
+          e.preventDefault();
+          downloadFile(src, title || 'image.jpg', localUrl);
+        };
+      }
+
+      if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      } else {
+        dialog.setAttribute('open', '');
+      }
+    };
 
     // Sync Repository Tree from GitHub API (Background / On-Demand)
     async function syncWithGitHub(isManual = false) {
@@ -636,6 +1026,7 @@
       const { icon, badgeClass, label } = getFileMeta(item.displayName);
       const downloadUrl = RAW_BASE_URL + encodeURI(item.path);
       const localRelUrl = encodeURI(item.path);
+      const isImg = isImageFile(item.displayName);
 
       // If item was displayed in search/filter mode, show which folder it belongs to
       const folderBadge = item.folderName ? `
@@ -644,12 +1035,29 @@
         </span>
       ` : '';
 
+      // Thumbnail preview element for images (matches Google Classroom card layout requested by user)
+      const thumbnailHtml = isImg ? `
+        <div class="mat-thumb-preview" onclick="openImageLightbox('${escapeJsStr(downloadUrl)}', '${escapeJsStr(item.displayName)}', '${escapeJsStr(localRelUrl)}')" title="ចុចដើម្បីមើលរូបភាពធំ (Click to Preview)">
+          <img src="${escapeHtml(localRelUrl)}" alt="${escapeHtml(item.displayName)}" loading="lazy" onerror="this.onerror=null; this.src='${escapeHtml(downloadUrl)}';">
+          <div class="mat-thumb-hover-overlay">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="11" y1="8" x2="11" y2="14"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </div>
+        </div>
+      ` : '';
+
+      const nameClickAttr = isImg ? `class="mat-file-name is-clickable-image" onclick="openImageLightbox('${escapeJsStr(downloadUrl)}', '${escapeJsStr(item.displayName)}', '${escapeJsStr(localRelUrl)}')" style="cursor: pointer;"` : 'class="mat-file-name"';
+
       return `
-        <div class="mat-item-card">
+        <div class="mat-item-card ${isImg ? 'has-thumb' : ''}">
           <div class="mat-card-header">
             <div class="mat-icon-badge ${badgeClass}">${icon}</div>
             <div class="mat-name-col">
-              <div class="mat-file-name" title="${escapeHtml(item.displayName)}">${escapeHtml(item.displayName)}</div>
+              <div ${nameClickAttr} title="${escapeHtml(item.displayName)}">${escapeHtml(item.displayName)}</div>
               <div class="mat-file-meta">
                 <span>${label}</span>
                 <span>•</span>
@@ -657,6 +1065,7 @@
                 ${folderBadge}
               </div>
             </div>
+            ${thumbnailHtml}
           </div>
           <div class="mat-card-footer">
             <button onclick="downloadFile('${escapeJsStr(downloadUrl)}', '${escapeJsStr(item.displayName)}', '${escapeJsStr(localRelUrl)}')" class="mat-download-btn" title="ទាញយកឯកសារ ${escapeHtml(item.displayName)}">
